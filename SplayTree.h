@@ -21,10 +21,9 @@ class SplayTree {
     vector<Node*> inOrder;
     Node* LeftRotation(Node* node);
     Node* RightRotation(Node* node);
-    Node* SplayHelper();
+    Node* SplayHelper(Node* root,string state, string city);
     void InOrderTraversal(Node* root);
 public:
-    SplayTree();
     void Insert(string state, string city, int deaths);
     int Search(Node* node, string state, string city);
     vector<Node*> GetVector(Node* root);
@@ -33,10 +32,6 @@ public:
 
 };
 
-//Constructor
-SplayTree::SplayTree() {
-
-}
 
 
 //Rotations
@@ -44,9 +39,6 @@ Node *SplayTree::LeftRotation(Node *node) {
 
 }
 Node *SplayTree::RightRotation(Node *node) {
-
-}
-Node *SplayTree::SplayHelper() {
 
 }
 
@@ -71,9 +63,11 @@ SplayTree::~SplayTree() {
 
 //Traversals and Accessors
 int SplayTree::Search(Node* root, string state, string city ) {
-    if(treeRoot == nullptr)
-        return -1;
-    return 0;
+    Node* tempNode = SplayHelper(root, state, city);
+    return tempNode->deaths;
+}
+Node *SplayTree::SplayHelper(Node* root, string state, string city) {
+
 }
 void SplayTree::InOrderTraversal(Node *root) {
     if(root == nullptr)
