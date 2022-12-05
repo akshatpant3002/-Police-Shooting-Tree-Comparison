@@ -16,6 +16,7 @@ public:
     maxBinaryHeap(int arb);
     void recursiveMax(int l1);
     void addVal(input val);
+    input pullTop();
 
 
 };
@@ -49,11 +50,29 @@ void maxBinaryHeap::recursiveMax(int l1){
 }
 
 //search by extracting value
+void maxBinaryHeap::addVal(input val){
+    node[currHeapCap] = val;
+    int prnt = (currHeapCap - 1)/2;
+    int i = currHeapCap;
+    while(node[prnt].deaths < node[currHeapCap].deaths){
+        input arb;
+        arb = node[currHeapCap];
+        node[currHeapCap] = node[prnt];
+        node[prnt] = arb;
+    }
+    i += 1;
+}
 
-void maxBinaryHeap::addVal(input val) {
+input maxBinaryHeap::pullTop(){
+    input top = node[0];
+    node[0] = node[--currHeapCap];
+    recursiveMax(0);
+    return top;
 
 
 }
+
+
 
 
 
