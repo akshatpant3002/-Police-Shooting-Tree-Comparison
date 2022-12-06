@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Police_Shooting_Tree_Comparisonn
+# Target rules for targets named HelloSFML
 
 # Build rule for target.
-Police_Shooting_Tree_Comparisonn: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Police_Shooting_Tree_Comparisonn
-.PHONY : Police_Shooting_Tree_Comparisonn
+HelloSFML: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 HelloSFML
+.PHONY : HelloSFML
 
 # fast build rule for target.
-Police_Shooting_Tree_Comparisonn/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Police_Shooting_Tree_Comparisonn.dir/build.make CMakeFiles/Police_Shooting_Tree_Comparisonn.dir/build
-.PHONY : Police_Shooting_Tree_Comparisonn/fast
+HelloSFML/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/HelloSFML.dir/build.make CMakeFiles/HelloSFML.dir/build
+.PHONY : HelloSFML/fast
 
 main.o: main.cpp.o
 .PHONY : main.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Police_Shooting_Tree_Comparisonn.dir/build.make CMakeFiles/Police_Shooting_Tree_Comparisonn.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/HelloSFML.dir/build.make CMakeFiles/HelloSFML.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -142,7 +142,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Police_Shooting_Tree_Comparisonn.dir/build.make CMakeFiles/Police_Shooting_Tree_Comparisonn.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/HelloSFML.dir/build.make CMakeFiles/HelloSFML.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -150,7 +150,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Police_Shooting_Tree_Comparisonn.dir/build.make CMakeFiles/Police_Shooting_Tree_Comparisonn.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/HelloSFML.dir/build.make CMakeFiles/HelloSFML.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -161,7 +161,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... Police_Shooting_Tree_Comparisonn"
+	@echo "... HelloSFML"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
