@@ -60,7 +60,7 @@
 						"c++"
 					]
 				},
-				"path" : "/Library/Developer/CommandLineTools/usr/bin/c++",
+				"path" : "/usr/bin/g++",
 				"version" : "13.0.0.13000029"
 			},
 			"language" : "CXX",

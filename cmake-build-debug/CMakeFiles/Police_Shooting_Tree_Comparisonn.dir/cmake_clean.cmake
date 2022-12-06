@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Police_Shooting_Tree_Comparisonn.dir/main.cpp.o"
+  "CMakeFiles/Police_Shooting_Tree_Comparisonn.dir/main.cpp.o.d"
   "Police_Shooting_Tree_Comparisonn"
   "Police_Shooting_Tree_Comparisonn.pdb"
 )
