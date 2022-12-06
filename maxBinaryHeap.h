@@ -4,7 +4,7 @@
 
 #ifndef POLICE_SHOOTING_TREE_COMPARISONN_MAXBINARYHEAP_H
 #define POLICE_SHOOTING_TREE_COMPARISONN_MAXBINARYHEAP_H
-#include <input.h>
+#include "input.h"
 
 void swap(int *a, int *b);
 
@@ -60,6 +60,8 @@ void maxBinaryHeap::addVal(input val){
         node[i] = node[prnt];
         node[prnt] = arb;
         i = (i - 1)/2;
+        prnt = (i - 1)/2;
+
 
     }
     currHeapCap += 1;
