@@ -67,7 +67,8 @@ int main() {
         getline(inputString,not_useful,',');
         getline(inputString,state_name,',');
 
-
+        city_name = city_name.substr(1,city_name.size()-2);
+        state_name = state_name.substr(1,state_name.size()-2);
         City city(city_name,state_name);
         if(!in_vector(cities,city)) {
             cities.push_back(city);
@@ -99,12 +100,16 @@ int main() {
     cout << "Write a city name to get number of deaths in the city!" << endl;
     getline(cin,city_input);
     cout << "Write a state name to accompany!" << endl;
-    getline(cin,city_input);
+    getline(cin,state_input);
+    cout << city_input << endl;
+
 
 
 
     auto start = chrono::high_resolution_clock::now();
     input x = heap.pullTop();
+    //cout << city_input << endl;
+    //cout << x.city << endl;
 
     while(!(x.city == city_input && x.state == state_input)) {
         x = heap.pullTop();
@@ -115,6 +120,15 @@ int main() {
 
     auto time_taken = chrono::duration_cast<chrono::microseconds>(stop-start);
     cout << time_taken.count() << endl;
+
+
+
+
+
+
+
+
+
 
     return 0;
 }
