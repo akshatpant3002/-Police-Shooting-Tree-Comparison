@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/vermaaryaan/CLionProjects/Police-Shooting-Tree-Comparison/main.cpp
+iostream
+-
+string
+-
+sstream
+-
+fstream
+-
+vector
+-
+

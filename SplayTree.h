@@ -10,7 +10,7 @@
 using namespace std;
 
 struct Node {
-    Node();
+    Node(string state, string city, int deaths);
     string state;
     string city;
     int deaths;
@@ -24,12 +24,13 @@ class SplayTree {
     vector<Node*> inOrder;
     Node* LeftRotation(Node* node);
     Node* RightRotation(Node* node);
-    Node* SplayHelper(Node* node, string state, string city);    //TODO
+    Node* InsertHelper(Node* root, string state, string city, int deaths);
+    Node* SplayHelper(Node* node, string state, string city);
     void InOrderTraversal(Node* root);
     void PreOrderTraversal(Node* root, string state, string city, int &result); //root, right, left
 public:
     SplayTree();
-    void Insert(string state, string city, int deaths);         //TODO
+    void Insert(string state, string city, int deaths);
     int Search(Node* node, string state, string city);
     vector<Node*> GetVector(Node* root);
     Node* GetRoot();
@@ -42,14 +43,15 @@ public:
 
 
 //Constructors
-Node::Node() {
+Node::Node(string state, string city, int deaths) {
+    this->state = state;
+    this->city = city;
+    this->deaths = deaths;
     left = nullptr;
     right = nullptr;
     parent = nullptr;
-    state = "";
-    city = "";
-    deaths = -1;
 }
+
 SplayTree::SplayTree() {
     treeRoot = nullptr;
 }
@@ -84,7 +86,18 @@ Node *SplayTree::RightRotation(Node *node) { //Zig
 
 //Insertion & Deletion
 void SplayTree::Insert(std::string state, std::string city, int deaths) {
-
+    treeRoot = InsertHelper(treeRoot, state, city, deaths);
+}
+Node* SplayTree::InsertHelper(Node *root, std::string state, std::string city, int deaths) {
+    if(root == nullptr) {
+        return new Node(state, city, deaths);
+    }
+    else if(root->deaths > deaths) {
+        treeRoot->left = InsertHelper(root->left, state, city, deaths);
+    }
+    else {
+        treeRoot->right = InsertHelper(root->right, state, city, deaths);
+    }
 }
 void SplayTree::PostOrderDeletion(Node *root) {
     if(root == nullptr)
@@ -151,6 +164,7 @@ Node *SplayTree::SplayHelper(Node* node, string state, string city) {
     }
     else
         cout << "failed to move to root" << endl;
+    return node;
 
 }
 void SplayTree::InOrderTraversal(Node *root) {
