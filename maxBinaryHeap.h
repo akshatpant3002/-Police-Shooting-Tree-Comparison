@@ -4,7 +4,7 @@
 
 #ifndef POLICE_SHOOTING_TREE_COMPARISONN_MAXBINARYHEAP_H
 #define POLICE_SHOOTING_TREE_COMPARISONN_MAXBINARYHEAP_H
-#include <input.h>
+#include "input.h"
 
 void swap(int *a, int *b);
 
@@ -52,15 +52,19 @@ void maxBinaryHeap::recursiveMax(int l1){
 //search by extracting value
 void maxBinaryHeap::addVal(input val){
     node[currHeapCap] = val;
-    int prnt = (currHeapCap - 1)/2;
     int i = currHeapCap;
-    while(node[prnt].deaths < node[currHeapCap].deaths){
+    int prnt = (i - 1)/2;
+    while(node[prnt].deaths < node[i].deaths){
         input arb;
-        arb = node[currHeapCap];
-        node[currHeapCap] = node[prnt];
+        arb = node[i];
+        node[i] = node[prnt];
         node[prnt] = arb;
+        i = (i - 1)/2;
+        prnt = (i - 1)/2;
+
+
     }
-    i += 1;
+    currHeapCap += 1;
 }
 
 input maxBinaryHeap::pullTop(){
