@@ -25,13 +25,13 @@ class SplayTree {
     Node* LeftRotation(Node* node);
     Node* RightRotation(Node* node);
     Node* InsertHelper(Node* root, string state, string city, int deaths);
-    Node* SplayHelper(Node* node, string state, string city);
+    Node* SplayHelper(Node* node);
     void InOrderTraversal(Node* root);
-    void PreOrderTraversal(Node* root, string state, string city, int &result); //root, right, left
+    void PreOrderTraversal(Node* root, string state, string city, Node* result); //root, right, left
 public:
     SplayTree();
     void Insert(string state, string city, int deaths);
-    int Search(Node* node, string state, string city);
+    Node* Search(string state, string city);
     vector<Node*> GetVector(Node* root);
     Node* GetRoot();
     void PostOrderDeletion(Node* root);
@@ -90,7 +90,8 @@ void SplayTree::Insert(std::string state, std::string city, int deaths) {
 }
 Node* SplayTree::InsertHelper(Node *root, std::string state, std::string city, int deaths) {
     if(root == nullptr) {
-        return new Node(state, city, deaths);
+        Node* tempNode = new Node(state, city, deaths);
+        return SplayHelper(tempNode);
     }
     else if(root->deaths > deaths) {
         treeRoot->left = InsertHelper(root->left, state, city, deaths);
@@ -115,15 +116,16 @@ SplayTree::~SplayTree() {
 
 
 //Traversals and Accessors
-int SplayTree::Search(Node* root, string state, string city) {
-    int result = -1;
-    PreOrderTraversal(root, state, city, result);
+Node* SplayTree::Search(string state, string city) {
+    Node* result = nullptr;
+    PreOrderTraversal(treeRoot, state, city, result);
     return result;
 }
-void SplayTree::PreOrderTraversal(Node *root, std::string state, std::string city, int &result) {
+void SplayTree::PreOrderTraversal(Node *root, std::string state, std::string city, Node* result) {
     if(root != nullptr) {
         if(root->state == state && root->city == city) {
-            result = root->deaths;
+            result = root;
+            SplayHelper(root);
             return;
         }
         PreOrderTraversal(root->right, state, city, result);
@@ -131,7 +133,7 @@ void SplayTree::PreOrderTraversal(Node *root, std::string state, std::string cit
 
     }
 }
-Node *SplayTree::SplayHelper(Node* node, string state, string city) {
+Node *SplayTree::SplayHelper(Node* node) {
     if(treeRoot == nullptr)
         return nullptr;
     while(node->parent != nullptr) {
