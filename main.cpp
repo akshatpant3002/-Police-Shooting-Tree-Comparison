@@ -146,7 +146,19 @@ int main() {
         cout << "Number of Armed Deaths (deaths when the civilian was armed): " << x.armed << endl;
         cout << "----------------------------------" << endl;
 
-        //tree.Search(state_input, city_input);
+      //  for(auto node : tree.GetVector())
+       //     cout << node->deaths << endl;
+        start = chrono::high_resolution_clock::now();
+        Node* test = tree.Search(state_input, city_input);
+        //cout <<"\n**" << test->deaths << endl;
+        stop = chrono::high_resolution_clock::now();
+        time_taken = chrono::duration_cast<chrono::microseconds>(stop - start);
+        cout << "(Splay Tree Implementation)" << endl;
+        cout << "Time taken to execute the search within the Splay Tree!: " << time_taken.count() << " microseconds" << endl;
+        cout << "Total Number of Deaths: " << test->deaths << endl;
+        cout << "Number of Unarmed/Unknown Deaths (deaths when the civilian was unarmed): " << test->unarmed << endl;
+        cout << "Number of Armed Deaths (deaths when the civilian was armed): " << test->armed << endl;
+        cout << "----------------------------------" << endl;
 
         cout << "Write a city name to get number of deaths in the city!" << endl;
         getline(cin, city_input);

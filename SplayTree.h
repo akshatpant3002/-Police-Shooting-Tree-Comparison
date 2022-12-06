@@ -10,6 +10,7 @@
 using namespace std;
 
 struct Node {
+    Node();
     Node(string state, string city, int deaths, int unarmed, int armed);
     string state;
     string city;
@@ -26,8 +27,7 @@ class SplayTree {
     vector<Node*> inOrder;
     Node* LeftRotation(Node* node);
     Node* RightRotation(Node* node);
-    Node* InsertHelper(Node* root, string state, string city, int deaths, int unarmed, int armed);
-    Node* SplayHelper(Node* node);
+    Node* SplayHelper(Node* node, int deaths);
     void InOrderTraversal(Node* root);
     void PreOrderTraversal(Node* root, string state, string city, Node*& result); //root, right, left
 public:
@@ -54,6 +54,16 @@ Node::Node(string state, string city, int deaths, int unarmed, int armed) {
     right = nullptr;
     parent = nullptr;
 }
+Node::Node() {
+    state = "";
+    city = "";
+    deaths = -1;
+    unarmed = -1;
+    armed = -1;
+    left = nullptr;
+    right = nullptr;
+    parent = nullptr;
+}
 
 SplayTree::SplayTree() {
     treeRoot = nullptr;
@@ -64,29 +74,21 @@ SplayTree::SplayTree() {
 //Rotations
 Node *SplayTree::LeftRotation(Node *node) { //Zag
 
-    cout << "LRotation\n" <<endl;
-    Node* newParent = node->right;
-    newParent->parent = node->parent;
-    Node* grandchild = newParent->left;
+
+    Node *newParent = node->right;
+    newParent->parent = node;
+    node->right = newParent->left;
     newParent->left = node;
     node->parent = newParent;
-    node->right = grandchild;
-    if(grandchild != nullptr)
-        grandchild->parent = node;
-    cout << "T6\n" <<endl;
     return newParent;
 }
 Node *SplayTree::RightRotation(Node *node) { //Zig
-    cout << "RRotation\n" <<endl;
-    Node* newParent = node->left;
-    if(newParent->parent != nullptr)
-        newParent->parent = node->parent;
-    Node* grandchild = newParent->right;
+
+    Node *newParent = node->left;
+    newParent->parent = node;
+    node->left = newParent->right;
     newParent->right = node;
     node->parent = newParent;
-    node->left = grandchild;
-    if(grandchild != nullptr)
-        grandchild->parent = node;
     return newParent;
 }
 
@@ -105,8 +107,7 @@ void SplayTree::Insert(std::string state, std::string city, int deaths, int unar
             if(temp->left == nullptr) {
                 Node* child = new Node(state, city, deaths, unarmed, armed);
                 child->parent = temp;
-                temp->left = child;     //splay here
-                SplayHelper(child);
+                temp->left = child;
                 return;
             }
             else
@@ -116,8 +117,7 @@ void SplayTree::Insert(std::string state, std::string city, int deaths, int unar
             if(temp->right == nullptr) {
                 Node* child = new Node(state, city, deaths, unarmed, armed);
                 child->parent = temp;
-                temp->right = child;     //splay here
-                SplayHelper(child);
+                temp->right = child;
                 return;
             }
             else
@@ -126,18 +126,7 @@ void SplayTree::Insert(std::string state, std::string city, int deaths, int unar
     }
 
 }
-//Node* SplayTree::InsertHelper(Node *root, std::string state, std::string city, int deaths, int unarmed, int armed) {
-//    if(root == nullptr) {
-//        Node* tempNode = new Node(state, city, deaths);
-//        return tempNode;
-//    }
-//    else if(root->deaths > deaths) {
-//        root->left = InsertHelper(root->left, state, city, deaths);
-//    }
-//    else { //if they are equal push to right
-//        root->right = InsertHelper(root->right, state, city, deaths);
-//    }
-//}
+
 void SplayTree::PostOrderDeletion(Node *root) {
     if(root == nullptr)
         return;
@@ -157,8 +146,7 @@ SplayTree::~SplayTree() {
 Node* SplayTree::Search(string state, string city) {
     Node* result = nullptr;
     PreOrderTraversal(treeRoot, state, city, result);
-    SplayHelper(result);
-    return result;
+   return SplayHelper(result, result->deaths);
 }
 void SplayTree::PreOrderTraversal(Node *root, std::string state, std::string city, Node*& result) {
     if(root == nullptr) {
@@ -174,38 +162,52 @@ void SplayTree::PreOrderTraversal(Node *root, std::string state, std::string cit
 
     }
 }
-Node *SplayTree::SplayHelper(Node* node) {
-    if(treeRoot == nullptr)
+Node* SplayTree::SplayHelper(Node* node, int deaths) {
+    Node front;
+    if (node == nullptr)
         return nullptr;
-    cout << "Made it to SplayHelper" << endl;
-    while(node->parent != nullptr) {
-        if(node->parent->parent == nullptr) {
-            if(node->parent->left == node)
-                RightRotation(node->parent);
-            else
-                LeftRotation(node->parent);
+    front.left = nullptr;
+    front.right = nullptr;
+    Node* MaxofMin = &front;
+    Node* MinofMax = &front;
+    bool ihatemylife = true;
+    while(ihatemylife == true) {   //we manually break from loop
+        if(node->deaths > deaths) {
+            if(node->left == nullptr)
+                break;
+            if(node->left->deaths > deaths){
+                node = RightRotation(node);
+                if(node->left == nullptr)
+                    break;
+            }
+            MinofMax->left= node;
+            MinofMax = MinofMax->left;
+            node = node->left; //iterator
+            MinofMax->left = nullptr;
         }
-        else if(node->parent->left == node && node->parent->parent->left == node->parent) {
-            RightRotation(node->parent->parent);
-            RightRotation(node->parent);
+        else if (node->deaths < deaths) {
+            if (node->right == nullptr)
+                break;
+            if (node->right->deaths < deaths) {
+                node = LeftRotation(node);
+                if(node->right == nullptr)
+                    break;
+            }
+            MaxofMin->right = node;
+            MaxofMin = MaxofMin->right;
+            node = node->right; //iterator
+            MaxofMin->right = nullptr;
         }
-        else if(node->parent->right == node && node->parent->parent->right == node->parent) {
-            LeftRotation(node->parent->parent);
-            LeftRotation(node->parent);
-        }
-        else if(node->parent->right == node && node->parent->parent->left == node->parent) {
-            LeftRotation(node->parent);
-            RightRotation(node->parent);
-        }
-        else (node->parent->left == node && node->parent->parent->right == node->parent){
-            RightRotation(node->parent);
-            LeftRotation(node->parent);
-        }
+        else
+            break;
     }
-    treeRoot = node;
+    MinofMax->left = node->right;
+    MaxofMin->right = node->left;
+    node->right = front.left;
+    node->left = front.right;
     return node;
-
 }
+
 void SplayTree::InOrderTraversal(Node *root) {
     if(root == nullptr)
         return;
