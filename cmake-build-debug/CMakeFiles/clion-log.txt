@@ -1,9 +1,5 @@
 /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/ninja -G Ninja /Users/akshatpant/CLionProjects/Police-Shooting-Tree-Comparisonn
-CMake Error at CMakeLists.txt:1:
-  Parse error.  Expected a command name, got unquoted argument with text
-  "<<<<<<<".
-
-
--- Configuring incomplete, errors occurred!
-See also "/Users/akshatpant/CLionProjects/Police-Shooting-Tree-Comparisonn/cmake-build-debug/CMakeFiles/CMakeOutput.log".
-See also "/Users/akshatpant/CLionProjects/Police-Shooting-Tree-Comparisonn/cmake-build-debug/CMakeFiles/CMakeError.log".
+-- Found SFML 2.5.1 in /usr/local/lib/cmake/SFML
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/akshatpant/CLionProjects/Police-Shooting-Tree-Comparisonn/cmake-build-debug

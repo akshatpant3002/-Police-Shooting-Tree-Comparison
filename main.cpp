@@ -4,7 +4,6 @@
 #include <fstream>
 #include <vector>
 #include "maxBinaryHeap.h"
-#include "SplayTree.h"
 #include "input.h"
 #include <chrono>
 using namespace std;
@@ -15,21 +14,33 @@ struct City {
     string city_name;
     string state_name;
     int deaths;
+    int unarmed;
+    int armed;
 
     City() {
         city_name = "";
         state_name = "";
         deaths = 0;
+        unarmed = 0;
+        armed = 0;
     }
 
     City(string city, string state) {
         city_name = city;
         state_name = state;
         deaths = 0;
+        unarmed = 0;
+        armed = 0;
     }
 
     void add_death() {
         deaths++;
+    }
+    void add_unarmed() {
+        unarmed++;
+    }
+    void add_armed() {
+        armed++;
     }
 
 };
@@ -58,26 +69,38 @@ int main() {
         string not_useful;
         string city_name;
         string state_name;
+        string armed_status;
 
         getline(inputString,not_useful,',');
         getline(inputString,not_useful,',');
         getline(inputString,not_useful,',');
         getline(inputString,not_useful,',');
-        getline(inputString,not_useful,',');
+        getline(inputString,armed_status,',');
         getline(inputString,city_name,',');
         getline(inputString,not_useful,',');
         getline(inputString,state_name,',');
 
+        armed_status = armed_status.substr(1,armed_status.size()-2);
         city_name = city_name.substr(1,city_name.size()-2);
         state_name = state_name.substr(1,state_name.size()-2);
         City city(city_name,state_name);
         if(!in_vector(cities,city)) {
             cities.push_back(city);
             cities[cities.size()-1].add_death();
+            if(armed_status == "unarmed" || armed_status == "undetermined")
+                cities[cities.size()-1].add_unarmed();
+            else {
+                cities[cities.size()-1].add_armed();
+            }
         }
         else {
             int index = get_ind(cities,city);
             cities.at(index).add_death();
+            if(armed_status == "unarmed" || armed_status == "undetermined")
+                cities[cities.size()-1].add_unarmed();
+            else {
+                cities[cities.size()-1].add_armed();
+            }
 
         }
     }
@@ -85,55 +108,76 @@ int main() {
     cout << cities.size() << endl;
 
     for(int i = 0; i < cities.size(); i++) {
-        cout << cities[i].city_name << endl;
-        cout << cities[i].state_name << endl;
-        cout << cities[i].deaths << endl;
+        //cout << cities[i].city_name << endl;
+        //cout << cities[i].state_name << endl;
+        //cout << cities[i].deaths << endl;
     }
 
     maxBinaryHeap heap(cities.size());
-    SplayTree tree;
     for(int i = 0; i < cities.size(); i++) {
         input pushed(cities[i].city_name,cities[i].state_name,cities[i].deaths);
-        tree.Insert(cities[i].city_name,cities[i].state_name,cities[i].deaths);
         heap.addVal(pushed);
     }
     string city_input;
     string state_input;
-
+    cout << "Type \"exit\" to leave the search!" << endl;
     cout << "Write a city name to get number of deaths in the city!" << endl;
-    getline(cin,city_input);
-    cout << "Write a state name to accompany!" << endl;
-    getline(cin,state_input);
-    cout << city_input << endl;
+    getline(cin, city_input);
+    vector<input> pulled;
+
+    while(city_input != "exit") {
 
 
+        //getline(cin, city_input);
+        cout << "Write a state name to accompany!" << endl;
+        getline(cin, state_input);
+        //cout << city_input << endl;
+        City inputted(city_input, state_input);
+        while (!in_vector(cities, inputted)) {
+            cout
+                    << "Error! That city is not contained in this dataset. It either doesn't exist, or it does not contain any police shootings :)"
+                    << endl;
+            cout << "Write a city name to get number of deaths in the city!" << endl;
+            getline(cin, city_input);
+            cout << "Write a state name to accompany!" << endl;
+            getline(cin, state_input);
+            //cout << city_input << endl;
+
+            inputted = City(city_input, state_input);
+        }
+
+        auto start = chrono::high_resolution_clock::now();
+
+        input x = heap.pullTop();
+        pulled.push_back(x);
+        //cout << x.city << endl;
+        //cout << city_input << endl;
+        //cout << state_input << endl;
+
+        while (!(x.city == city_input && x.state == state_input)) {
+            cout << x.city << endl;
+            x = heap.pullTop();
+            pulled.push_back(x);
+        }
+
+        cout << x.deaths << endl;
+        for (int i = 0; i < pulled.size(); i++) {
+            cout << pulled[i].city << endl;
+            heap.addVal(pulled[i]);
+        }
+        pulled.clear();
+
+        auto stop = chrono::high_resolution_clock::now();
+
+        auto time_taken = chrono::duration_cast<chrono::microseconds>(stop - start);
+        cout << time_taken.count() << endl;
+        cout << "Write a city name to get number of deaths in the city!" << endl;
+        getline(cin, city_input);
+    }
 
 
-    auto start = chrono::high_resolution_clock::now();
+        return 0;
 
-    Node* y = tree.Search(state_input, city_input);
-    cout << y->deaths << endl;
-
-//    while(!(x.city == city_input && x.state == state_input)) {
-//        x = heap.pullTop();
-//    }
-    //cout << x.deaths << endl;
-
-    auto stop = chrono::high_resolution_clock::now();
-
-    auto time_taken = chrono::duration_cast<chrono::microseconds>(stop-start);
-    cout << time_taken.count() << endl;
-
-
-
-
-
-
-
-
-
-
-    return 0;
 }
 
 bool in_vector(vector<City> vector1, City city) {

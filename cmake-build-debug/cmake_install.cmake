@@ -1,4 +1,4 @@
-# Install script for directory: /Users/sashi/Desktop/Police-Shooting-Tree-Comparisonn
+# Install script for directory: /Users/akshatpant/CLionProjects/Police-Shooting-Tree-Comparisonn
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/sashi/Desktop/Police-Shooting-Tree-Comparisonn/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/akshatpant/CLionProjects/Police-Shooting-Tree-Comparisonn/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
