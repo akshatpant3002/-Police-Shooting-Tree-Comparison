@@ -4,6 +4,7 @@
 #include <fstream>
 #include <vector>
 #include "maxBinaryHeap.h"
+#include "SplayTree.h"
 #include "input.h"
 #include <chrono>
 using namespace std;
@@ -104,8 +105,10 @@ int main() {
     }
 
     maxBinaryHeap heap(cities.size());
+    SplayTree tree;
     for(int i = 0; i < cities.size(); i++) {
         input pushed(cities[i].city_name,cities[i].state_name,cities[i].deaths);
+        tree.Insert(cities[i].city_name,cities[i].state_name,cities[i].deaths);
         heap.addVal(pushed);
     }
     string city_input;
@@ -129,14 +132,14 @@ int main() {
     }
 
     auto start = chrono::high_resolution_clock::now();
-    input x = heap.pullTop();
-    //cout << city_input << endl;
-    //cout << x.city << endl;
 
-    while(!(x.city == city_input && x.state == state_input)) {
-        x = heap.pullTop();
-    }
-    cout << x.deaths << endl;
+    Node* y = tree.Search(state_input, city_input);
+    cout << y->deaths << endl;
+
+//    while(!(x.city == city_input && x.state == state_input)) {
+//        x = heap.pullTop();
+//    }
+    //cout << x.deaths << endl;
 
     auto stop = chrono::high_resolution_clock::now();
 
