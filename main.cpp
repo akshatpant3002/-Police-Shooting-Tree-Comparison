@@ -4,6 +4,7 @@
 #include <fstream>
 #include <vector>
 #include "maxBinaryHeap.h"
+#include "SplayTree.h"
 #include "input.h"
 #include <chrono>
 using namespace std;
@@ -81,8 +82,10 @@ int main() {
     }
 
     maxBinaryHeap heap(cities.size());
+    SplayTree tree = SplayTree();
     for(int i = 0; i < cities.size(); i++) {
         input pushed(cities[i].city,cities[i].state,cities[i].deaths,cities[i].unarmed,cities[i].armed);
+        tree.Insert(cities[i].state,cities[i].city,cities[i].deaths, cities[i].unarmed,cities[i].armed);
         heap.addVal(pushed);
     }
     string city_input;
