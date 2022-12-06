@@ -3,7 +3,11 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
+#include "maxBinaryHeap.h"
+#include "input.h"
+#include <chrono>
 using namespace std;
+
 
 
 struct City {
@@ -29,8 +33,6 @@ struct City {
 
 };
 
-
-bool contains(vector<City> vector1, City city);
 
 int get_ind(vector<City> vector1, City city);
 
@@ -79,11 +81,47 @@ int main() {
     }
 
     cout << cities.size() << endl;
+
     for(int i = 0; i < cities.size(); i++) {
         cout << cities[i].city_name << endl;
         cout << cities[i].state_name << endl;
         cout << cities[i].deaths << endl;
     }
+
+    maxBinaryHeap heap(cities.size());
+    for(int i = 0; i < cities.size(); i++) {
+        input pushed(cities[i].city_name,cities[i].state_name,cities[i].deaths);
+        heap.addVal(pushed);
+    }
+    string city_input;
+    string state_input;
+
+    cout << "Write a city name to get number of deaths in the city!" << endl;
+    getline(cin,city_input);
+    cout << "Write a state name to accompany!" << endl;
+    getline(cin,city_input);
+
+
+
+    auto start = chrono::high_resolution_clock::now();
+    input x = heap.pullTop();
+
+    while(!(x.city == city_input && x.state == state_input)) {
+        x = heap.pullTop();
+    }
+    cout << x.deaths << endl;
+
+    auto stop = chrono::high_resolution_clock::now();
+
+    auto time_taken = chrono::duration_cast<chrono::microseconds>(stop-start);
+    cout << time_taken.count() << endl;
+
+
+
+
+
+
+
 
 
 
