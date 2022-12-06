@@ -84,7 +84,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/sashi/Desktop/Police-Shooting-Tree-Comparisonn/input.h">
+			<Option target="Police_Shooting_Tree_Comparisonn"/>
+		</Unit>
 		<Unit filename="/Users/sashi/Desktop/Police-Shooting-Tree-Comparisonn/main.cpp">
+			<Option target="Police_Shooting_Tree_Comparisonn"/>
+		</Unit>
+		<Unit filename="/Users/sashi/Desktop/Police-Shooting-Tree-Comparisonn/maxBinaryHeap.h">
 			<Option target="Police_Shooting_Tree_Comparisonn"/>
 		</Unit>
 		<Unit filename="/Users/sashi/Desktop/Police-Shooting-Tree-Comparisonn/CMakeLists.txt">
