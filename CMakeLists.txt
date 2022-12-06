@@ -4,4 +4,5 @@ project(Police_Shooting_Tree_Comparisonn)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(Police_Shooting_Tree_Comparisonn
-        main.cpp)
+        main.cpp input.h maxBinaryHeap.h )
+
