@@ -146,6 +146,8 @@ int main() {
         cout << "Number of Armed Deaths (deaths when the civilian was armed): " << x.armed << endl;
         cout << "----------------------------------" << endl;
 
+        //tree.Search(state_input, city_input);
+
         cout << "Write a city name to get number of deaths in the city!" << endl;
         getline(cin, city_input);
     }

@@ -63,25 +63,30 @@ SplayTree::SplayTree() {
 
 //Rotations
 Node *SplayTree::LeftRotation(Node *node) { //Zag
+
+    cout << "LRotation\n" <<endl;
     Node* newParent = node->right;
     newParent->parent = node->parent;
     Node* grandchild = newParent->left;
     newParent->left = node;
     node->parent = newParent;
     node->right = grandchild;
-    grandchild->parent = node;
-
+    if(grandchild != nullptr)
+        grandchild->parent = node;
+    cout << "T6\n" <<endl;
     return newParent;
 }
 Node *SplayTree::RightRotation(Node *node) { //Zig
+    cout << "RRotation\n" <<endl;
     Node* newParent = node->left;
-    newParent->parent = node->parent;
+    if(newParent->parent != nullptr)
+        newParent->parent = node->parent;
     Node* grandchild = newParent->right;
     newParent->right = node;
     node->parent = newParent;
     node->left = grandchild;
-    grandchild->parent = node;
-
+    if(grandchild != nullptr)
+        grandchild->parent = node;
     return newParent;
 }
 
@@ -192,17 +197,12 @@ Node *SplayTree::SplayHelper(Node* node) {
             LeftRotation(node->parent);
             RightRotation(node->parent);
         }
-        else {
+        else (node->parent->left == node && node->parent->parent->right == node->parent){
             RightRotation(node->parent);
             LeftRotation(node->parent);
         }
     }
-    if(treeRoot == node) {
-        cout << "successfully moved to root" << endl;
-        return node;
-    }
-    else
-        cout << "failed to move to root" << endl;
+    treeRoot = node;
     return node;
 
 }
