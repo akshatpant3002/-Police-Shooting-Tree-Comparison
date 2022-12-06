@@ -18,6 +18,7 @@ public:
     int deaths;
 
     input();
+    input& operator=(const input&);
     input(string city, string state, int deaths);
 };
 
@@ -25,6 +26,10 @@ input::input(string city, string state, int deaths){
     this->city = city;
     this->state = state;
     this->deaths = deaths;
+}
+
+input &input::operator=(const input&) {
+    return *this;
 }
 
 
