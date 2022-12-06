@@ -11,9 +11,9 @@ class maxBinaryHeap {
     int currHeapCap;
     input *node;
 public:
+    void deleteAll();
     maxBinaryHeap(int arb);
     input pullTop();
-    void deleteAll();
     void recursiveMax(int l1);
     void addVal(input val);
 
